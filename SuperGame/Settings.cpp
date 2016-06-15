@@ -5,7 +5,7 @@
 Settings::Settings() :
 	mGameName("Bienio Super Pong"),
 	mWindowWidth(800),
-	mWindowHeight(600),
+	mWindowHeight(750),
 	mFramerateLimit(60),
 	mPaddleVelocity(6),
 	mBallVelocity(sf::Vector2f(4.f, 4.f)),

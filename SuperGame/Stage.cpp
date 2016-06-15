@@ -7,7 +7,7 @@
 
 Stage::Stage():
 	mWidth(800),
-	mHeight(600) {
+	mHeight(750) {
 
 }
 
@@ -17,7 +17,6 @@ Stage::~Stage() {
 
 void Stage::addScene(Scene & scene, unsigned int position) {
 	mScenes.insert(mScenes.begin() + position, scene);
-
 	refresh();
 }
 
@@ -41,6 +40,11 @@ void Stage::removeScene(std::string name) {
 	refresh();
 }
 
+void Stage::removeAll() {
+	mScenes.clear();
+	refresh();
+}
+
 Scene Stage::getScene(std::string name) {
 	for (int nIndex = 0; nIndex < mScenes.size(); nIndex++) {
 		if (name == mScenes[nIndex].getName()) {
@@ -60,6 +64,12 @@ unsigned int Stage::getWidth() {
 void Stage::refresh() {
 	unsigned int currHeight = 0;
 
+	if (mScenes.size() == 0) {
+		mHeight = 0;
+		mWidth = 0;
+		return;
+	}
+
 	for (int nIndex = 0; nIndex < mScenes.size(); nIndex++) {
 		mScenes[nIndex].setAbsolutePosition(sf::Vector2f(0, currHeight));
 		mScenes[nIndex].setTopBorder(sf::Vector2f(0, currHeight - 5));
@@ -70,7 +80,7 @@ void Stage::refresh() {
 	mHeight = currHeight;
 	mWidth = mScenes[0].getWidth();
 
-	//printInfo();
+	printInfo();
 }
 
 void Stage::printInfo() {

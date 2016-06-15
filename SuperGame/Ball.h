@@ -1,7 +1,7 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include <SFML/Audio.hpp>
+#include <SFML\System.hpp>
 #include "Settings.h"
 #include "Scene.h"
 #include "Stage.h"
@@ -37,8 +37,10 @@ private:
 	Stage * mStage;
 	Score * mScore;
 	Scene mScene;
-
+	static sf::Clock bufferStopwatch;
 };
+
+
 
 #endif
 

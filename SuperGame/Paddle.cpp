@@ -1,6 +1,4 @@
-#include <iostream>
 #include "Paddle.h"
-#include "Settings.h"
 
 
 Paddle::Paddle(unsigned int number, Settings & settings, Stage & stage) :
@@ -77,19 +75,13 @@ void Paddle::handleInput() {
 void Paddle::move() {
 	
 	if (mIsUp) {
-
 		if(mBody.getGlobalBounds().top - mVelocity >= mScene.getAbsolutePosition().y)
 			mBody.move(sf::Vector2f(0, -mVelocity));
-			
-		//std::cout << mBody.getPosition().x << " : " << mBody.getPosition().y << std::endl;
 	}
 
 	if (mIsDown) {
-
 		if ((mBody.getGlobalBounds().top + mBody.getGlobalBounds().height) + mVelocity <= mScene.getAbsolutePosition().y + mScene.getHeight())
 			mBody.move(sf::Vector2f(0, mVelocity));
-
-		//std::cout << mBody.getPosition().x << " : " << mBody.getPosition().y << std::endl;
 	}
 
 }
@@ -116,6 +108,30 @@ void Paddle::reset() {
 	mBody.setPosition(mPosition);
 	mBody.setSize(mSize);
 
+}
+
+void Paddle::handleAI(Ball ball) {
+
+	unsigned int targetY = ball.getBody().getGlobalBounds().top;
+	unsigned int paddingMiddleY = mBody.getGlobalBounds().top + (mBody.getGlobalBounds().height / 2);
+
+	//to avoid shaking of paddle
+	if ((paddingMiddleY < targetY && paddingMiddleY + mVelocity >= targetY) ||
+		(paddingMiddleY > targetY && paddingMiddleY - mVelocity <= targetY)) {
+		mIsUp = false;
+		mIsDown = false;
+		return;
+	}
+
+	if (targetY < paddingMiddleY)
+		mIsUp = true;
+	else
+		mIsUp = false;
+
+	if (targetY > paddingMiddleY)
+		mIsDown = true;
+	else
+		mIsDown = false;
 }
 
 void Paddle::setNumber(int number) {
