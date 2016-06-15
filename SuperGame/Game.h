@@ -17,18 +17,17 @@ public:
 	void run();
 
 private:
-	enum GameState { MENU, GAME, GAME_OVER, END };
+	enum GameState { MENU, GAME_AI, GAME_PVP, GAME_OVER, END };
 	GameState mState;
 	sf::Font mFont;
 	Settings mSettings;
 	Stage mStage;
 
 	void menu();
-	void game();
+	void game(bool isPVP);
 	sf::Vector2f calculateVelocity(Paddle& paddle, Ball& ball);
 	template <typename T>
 	bool isInBounds(const T& value, const T& low, const T& high);
-	void handleEvents(sf::RenderWindow& window);
 	void resetGame(Paddle& paddle1, Paddle& paddle2, Ball& ball, sf::RenderWindow& window, Score& score, Stage& stage);
 	void handleCollision(Paddle& paddle1, Paddle& paddle2, Ball& ball);
 

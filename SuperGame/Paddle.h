@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Settings.h"
+#include "Ball.h"
 #include "Stage.h"
 #include "Scene.h"
 
@@ -15,6 +16,7 @@ public:
 	void handleInput();
 	void move();
 	void reset();
+	void handleAI(Ball ball);
 
 	//getters and setters
 	void setNumber(int number);

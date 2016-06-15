@@ -16,6 +16,7 @@ Ball::Ball(Settings & settings, Stage & stage, Score & score) :
 	mBody.setRadius(mSettings->getBallSize());
 	mBody.setPosition(sf::Vector2f(mScene.getWidth()/2, (mScene.getHeight()/2) + mScene.getAbsolutePosition().y));
 	mSpeedMultiplier = mSettings->getBallSpeedMultiplier();
+
 }
 
 Ball::~Ball() {
@@ -64,36 +65,31 @@ void Ball::reset() {
 	float y = sqrt(40 - pow(x, 2));
 	y = y * z;
 	
-	mVelocity = sf::Vector2f(x, y);
+	//adding some fractures to avoid diagonal shots
+	mVelocity = sf::Vector2f(x + 0.2, y + 0.4);
 }
 
 void Ball::handleBorderCollision() {
 
 	//bottom border collision
-	if (mBody.getGlobalBounds().top + mBody.getGlobalBounds().height >= mScene.getHeight() + mScene.getAbsolutePosition().y) {
+	if(mBody.getGlobalBounds().top + mBody.getGlobalBounds().height > mScene.getHeight() + mScene.getAbsolutePosition().y) {
 		mVelocity.y *= -1;
-	}
-
 	//top border collision
-	if (mBody.getGlobalBounds().top <= mScene.getAbsolutePosition().y) {
+	} else if(mBody.getGlobalBounds().top - mBody.getGlobalBounds().height < mScene.getAbsolutePosition().y) {
 		mVelocity.y *= -1;
-	}
-
 	//left border collision
-	if (mBody.getGlobalBounds().left < mScene.getAbsolutePosition().x) {
+	} else if(mBody.getGlobalBounds().left < mScene.getAbsolutePosition().x) {
 		//std::cout << "****** 2 scored ******" << std::endl;
 		//std::cout << mScene.getAbsolutePosition().x << std::endl;
 		//std::cout << mBody.getGlobalBounds().left << std::endl;
 		mScore->addScore(2);
-		
-	}
-
 	//right border collision
-	if (mBody.getGlobalBounds().left + mBody.getGlobalBounds().width > mScene.getWidth()) {
+	} else if(mBody.getGlobalBounds().left + mBody.getGlobalBounds().width > mScene.getWidth()) {
 		//std::cout << "****** 1 scored ******" << std::endl;
 		//std::cout << mBody.getGlobalBounds().left + mBody.getGlobalBounds().width << std::endl;
 		//std::cout << mScene.getWidth() << std::endl;
 		mScore->addScore(1);
+
 	}
 
 }
