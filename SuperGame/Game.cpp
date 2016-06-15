@@ -1,6 +1,6 @@
 #include "Game.h"
 
-//anything
+//Aaything2 2222
 Game::Game() {
 
 	mState = END;
