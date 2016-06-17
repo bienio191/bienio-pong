@@ -8,6 +8,7 @@
 #include "Stage.h"
 #include "Score.h"
 #include "Powerup.h"
+#include "PowerupManager.h"
 
 class Game {
 
@@ -32,6 +33,7 @@ private:
 	bool isInBounds(const T& value, const T& low, const T& high);
 	void resetGame(Paddle& paddle1, Paddle& paddle2, Ball& ball, sf::RenderWindow& window, Score& score, Stage& stage);
 	void handleCollision(Paddle& paddle1, Paddle& paddle2, Ball& ball);
+	int getGameTime();
 
 };
 

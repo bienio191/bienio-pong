@@ -36,6 +36,8 @@ void Game::run() {
 	}
 }
 
+
+
 void Game::menu() {
 	sf::RenderWindow window(sf::VideoMode(mSettings.getWindowWidth(), mSettings.getWindowHeight()), mSettings.getName());
 	window.setFramerateLimit(mSettings.getFramerateLimit());
@@ -114,6 +116,7 @@ void Game::game(bool isPVP) {
 	sf::RenderWindow window(sf::VideoMode(mStage.getWidth(), mStage.getHeight()), mSettings.getName());
 	window.setFramerateLimit(mSettings.getFramerateLimit());
 
+	PowerupManager powerupManager(mGameClock);
 	mGameClock.restart();
 	while (mState == GAME_AI || mState == GAME_PVP) {
 
@@ -155,6 +158,13 @@ void Game::game(bool isPVP) {
 		window.draw(mStage.getScene("gameBody").getTopBorderLine());
 		window.draw(timeText);
 		ball.move();
+
+		for (int nIndex = 0; nIndex < powerupManager.getActivePowerups().size(); nIndex++) {
+			//std::cout << "Coœ tam rysujemy w (" << powerupManager.getActivePowerups()[nIndex].getBody().getPosition().x << ", " << powerupManager.getActivePowerups()[nIndex].getBody().getPosition().y  << ")" << std::endl;
+			//std::cout << powerupManager.getActivePowerups().size() << std::endl;
+			window.draw(powerupManager.getActivePowerups()[nIndex].getBody());
+		}
+
 		window.display();
 	}
 
@@ -280,4 +290,14 @@ void Game::handleCollision(Paddle & paddle1, Paddle & paddle2, Ball & ball) {
 template <typename T>
 bool Game::isInBounds(const T& value, const T& low, const T& high) {
 	return (value > low) && !(value > high); //  is int range (low, high]
+}
+
+int Game::getGameTime() {
+	sf::Clock * gameGlobalClock = &mGameClock;
+
+	if (gameGlobalClock) {
+		return gameGlobalClock->getElapsedTime().asSeconds();
+	}
+
+	return 0;
 }

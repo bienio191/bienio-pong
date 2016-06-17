@@ -7,9 +7,14 @@ class P_MakeNarrower : public Powerup {
 
 public:
 	P_MakeNarrower();
-	~ P_MakeNarrower();
+	~P_MakeNarrower();
 
 	void doAction();
+	sf::RectangleShape getBody();
+
+
+private:
+	sf::RectangleShape mBody;
 
 };
 

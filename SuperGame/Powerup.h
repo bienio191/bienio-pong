@@ -9,12 +9,16 @@ public:
 	Powerup();
 	virtual ~Powerup();
 
-	virtual void doAction() = 0;
+	virtual void doAction();
+	virtual sf::RectangleShape getBody();
+	virtual bool isActive();
+	virtual void update();
 
 private:
 	sf::Clock mInternalClock;
 	sf::Vector2f mPosition;
 	unsigned int mDurationInSeconds;
+	bool mIsActive;
 };
 
 #endif
