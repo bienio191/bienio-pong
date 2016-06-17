@@ -80,7 +80,7 @@ void Paddle::move() {
 	}
 
 	if (mIsDown) {
-		if ((mBody.getGlobalBounds().top + mBody.getGlobalBounds().height) + mVelocity <= mScene.getAbsolutePosition().y + mScene.getHeight())
+		if ((mBody.getGlobalBounds().top + mBody.getGlobalBounds().height) <= mScene.getAbsolutePosition().y + mScene.getHeight())
 			mBody.move(sf::Vector2f(0, mVelocity));
 	}
 
@@ -120,6 +120,7 @@ void Paddle::handleAI(Ball ball) {
 		(paddingMiddleY > targetY && paddingMiddleY - mVelocity <= targetY)) {
 		mIsUp = false;
 		mIsDown = false;
+
 		return;
 	}
 

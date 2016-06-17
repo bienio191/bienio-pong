@@ -29,6 +29,9 @@ void Game::run() {
 			case GameState::GAME_PVP:
 				game(true);
 				break;
+			case GameState::GAME_OVER:
+				game(true);
+				break;
 		}
 	}
 }
@@ -79,13 +82,13 @@ void Game::menu() {
 		}
 
 
-			window.clear();
-			window.draw(title);
+		window.clear();
+		window.draw(title);
 
-			for (int i = 0; i<ile; i++)
-				window.draw(tekst[i]);
+		for (int i = 0; i<ile; i++)
+			window.draw(tekst[i]);
 
-			window.display();
+		window.display();
 	}
 }
 
@@ -94,7 +97,7 @@ void Game::game(bool isPVP) {
 	mStage.removeAll();
 	Scene gameHeader("gameHeader", 800, 100);
 	Scene gameBody("gameBody", 800, 600);
-	Scene gameFooter("gameFooter", 800, 50);
+	Scene gameFooter("gameFooter", 800, 100);
 	mStage.addScene(gameHeader, 0);
 	mStage.addScene(gameBody, 1);
 	mStage.addScene(gameFooter, 2);
@@ -102,10 +105,16 @@ void Game::game(bool isPVP) {
 	Paddle paddle1(1, mSettings, mStage);
 	Paddle paddle2(2, mSettings, mStage);
 	Ball ball(mSettings, mStage, score);
+	sf::Text timeText;
+	timeText.setFont(mFont);
+	timeText.setColor(sf::Color::White);
+	timeText.setCharacterSize(30);
+	timeText.setPosition(20, mStage.getScene("gameFooter").getAbsolutePosition().y + 40);
 
 	sf::RenderWindow window(sf::VideoMode(mStage.getWidth(), mStage.getHeight()), mSettings.getName());
 	window.setFramerateLimit(mSettings.getFramerateLimit());
 
+	mGameClock.restart();
 	while (mState == GAME_AI || mState == GAME_PVP) {
 
 		sf::Event event;
@@ -124,6 +133,8 @@ void Game::game(bool isPVP) {
 
 		window.clear();
 
+		int elapsedSeconds = mGameClock.getElapsedTime().asSeconds();
+		timeText.setString("Elapsed time: " + std::to_string(elapsedSeconds));
 		paddle1.handleInput();
 		paddle1.move();
 
@@ -142,9 +153,15 @@ void Game::game(bool isPVP) {
 		window.draw(score.getScoreText());
 		window.draw(mStage.getScene("gameBody").getBottomBorderLine());
 		window.draw(mStage.getScene("gameBody").getTopBorderLine());
+		window.draw(timeText);
 		ball.move();
 		window.display();
 	}
+
+}
+
+void Game::gameOver() {
+
 
 }
 
@@ -209,6 +226,7 @@ void Game::resetGame(Paddle & paddle1, Paddle & paddle2, Ball & ball, sf::Render
 	paddle2.reset();
 	ball.reset();
 
+
 	//text indicating which player has won the game
 	sf::Font font;
 	sf::Text textStart;
@@ -233,14 +251,17 @@ void Game::resetGame(Paddle & paddle1, Paddle & paddle2, Ball & ball, sf::Render
 	window.draw(stage.getScene("gameBody").getTopBorderLine());
 	window.display();
 
-	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && (mState == GAME_AI || mState == GAME_PVP)) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				mState = END;
+			} else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+				mState = MENU;
 			}
 		}
 	}
+	mGameClock.restart();
 }
 
 void Game::handleCollision(Paddle & paddle1, Paddle & paddle2, Ball & ball) {

@@ -22,9 +22,11 @@ private:
 	sf::Font mFont;
 	Settings mSettings;
 	Stage mStage;
+	sf::Clock mGameClock;
 
 	void menu();
 	void game(bool isPVP);
+	void gameOver();
 	sf::Vector2f calculateVelocity(Paddle& paddle, Ball& ball);
 	template <typename T>
 	bool isInBounds(const T& value, const T& low, const T& high);

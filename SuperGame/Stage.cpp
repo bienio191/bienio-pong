@@ -80,7 +80,7 @@ void Stage::refresh() {
 	mHeight = currHeight;
 	mWidth = mScenes[0].getWidth();
 
-	printInfo();
+	//printInfo();
 }
 
 void Stage::printInfo() {
