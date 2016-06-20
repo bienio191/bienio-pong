@@ -185,32 +185,32 @@ sf::Vector2f Game::calculateVelocity(Paddle& paddle, Ball& ball) {
 	if (isInBounds(normValue, (float) 0.8, (float)1)) {
 		//cout << "isInBounds(normValue, 0.8, 1)" << endl;
 		return sf::Vector2f(2.3, -5.2);
-		//2
+	//2
 	}
 	else if (isInBounds(normValue, (float) 0.6, (float) 0.8)) {
 		//cout << "isInBounds(normValue, 0.6, 0.8)" << endl;
 		return sf::Vector2f(3.2, -4.3);
-		//3
+	//3
 	}
 	else if (isInBounds(normValue, (float) 0.1, (float) 0.6)) {
 		//cout << "isInBounds(normValue, 0.1, 0.6)" << endl;
 		return sf::Vector2f(4.3, -3.2);
-		//4
+	//4
 	}
 	else if (isInBounds(normValue, (float)-0.1, (float) 0.1)) {
 		//cout << "isInBounds(normValue, -0.1, 0.1)" << endl;
 		return sf::Vector2f(5.5, 0);
-		//5
+	//5
 	}
 	else if (isInBounds(normValue, (float)-0.6, (float)-0.1)) {
 		//cout << "isInBounds(normValue, -0.6, -0.1)" << endl;
 		return sf::Vector2f(4.3, 3.2);
-		//6
+	//6
 	}
 	else if (isInBounds(normValue, (float)-0.8, (float)-0.6)) {
 		//cout << "isInBounds(normValue, -0.8, -0.6)" << endl;
 		return sf::Vector2f(3.2, 4.3);
-		//7
+	//7
 	}
 	else if (isInBounds(normValue, (float)-1, (float)-0.8)) {
 		//cout << "isInBounds(normValue, -1, -0.8)" << endl;

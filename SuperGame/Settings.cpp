@@ -7,13 +7,13 @@ Settings::Settings() :
 	mWindowWidth(800),
 	mWindowHeight(750),
 	mFramerateLimit(60),
-	mPaddleVelocity(6),
+	mPaddleVelocity(8),
 	mBallVelocity(sf::Vector2f(4.f, 4.f)),
 	mPaddleMargin(5.f),
 	mPaddleWidth(120.f),
 	mPaddleHeight(10.f),
 	mBallSize(4.f),
-	mBallSpeedMuliplier(2) {
+	mBallSpeedMuliplier(2.6) {
 
 }
 
